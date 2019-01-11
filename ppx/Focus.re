@@ -23,28 +23,7 @@ let createLens = name => [%expr
   }
 ];
 
-let map_field = mapper => {
-  let rec recurseField =
-    fun
-    | {pexp_desc: Pexp_field({pexp_desc: Pexp_ident({txt: Lident(name)})}, {txt: Lident(snd_name)})} => {
-        print_string("base case: \n");
-        print_string("name: " ++ name);
-        print_newline();
-        print_string("snd_name: " ++ snd_name);
-        print_newline();
-
-        %expr
-        [%e createLens(snd_name)];
-      }
-    | {pexp_desc: Pexp_field(next, {txt: Lident(name)})} => [%expr
-        [%e recurseField(next)] |-- [%e createLens(name)]
-      ]
-    | x => Ast_mapper.default_mapper.expr(mapper, x);
-
-  recurseField;
-};
-
-let get_mapper =
+let focus_mapper =
   Parsetree.{
     ...Ast_mapper.default_mapper,
     expr: (mapper, expr) =>
@@ -53,10 +32,27 @@ let get_mapper =
         %expr
         {
           open Lens;
-          %e
-          map_field(mapper, expr);
+          let%e rec recurseField = (
+            fun
+            | {pexp_desc: Pexp_field({pexp_desc: Pexp_ident({txt: Lident(name)})}, {txt: Lident(snd_name)})} => {
+                print_string("base case: \n");
+                print_string("name: " ++ name);
+                print_newline();
+                print_string("snd_name: " ++ snd_name);
+                print_newline();
+
+                %expr
+                [%e createLens(snd_name)];
+              }
+            | {pexp_desc: Pexp_field(next, {txt: Lident(name)})} => [%expr
+                [%e recurseField(next)] |-- [%e createLens(name)]
+              ]
+            | x => Ast_mapper.default_mapper.expr(mapper, x)
+          );
+
+          recurseField(expr);
         }
-      | _ => Ast_mapper.default_mapper.expr(mapper, expr)
+      | _ => fail(expr.pexp_loc, "invalid lens declaration")
       },
   };
 
@@ -66,7 +62,7 @@ let mapper = _argv =>
     expr: (mapper, expr) =>
       switch (expr.pexp_desc) {
       | Pexp_extension(({txt: "focus", loc}, PStr([{pstr_desc: Pstr_eval(expr, attributes)}]))) =>
-        get_mapper.expr(get_mapper, expr)
+        focus_mapper.expr(focus_mapper, expr)
       | _ => Ast_mapper.default_mapper.expr(mapper, expr)
       },
   };

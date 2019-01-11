@@ -16,13 +16,13 @@ type person = {
 
 let streetL = [%focus person.department.address.street];
 
-let streetNumber = [%focus person.address.street_number];
+/*let streetNumber = [%focus person.address?street_number];*/
 
 let addressL = [%focus person.department.address];
 
 let addressStreetL = [%focus address.street];
 
-let department1 = {
+let department = {
   name: "eng",
   address: {
     street: "some other street 123",
@@ -30,23 +30,26 @@ let department1 = {
   },
 };
 
-let person1 = {
+let person = {
   name: "bob",
   age: 42,
   address: {
     street: "some street",
     street_number: None,
   },
-  department: department1,
+  department,
 };
 
-print_string("street: " ++ streetL.get(person1));
+print_string("street: " ++ streetL.get(person));
 print_newline();
 
-print_string("department street: " ++ addressL.get(person1).street);
+print_string("department street: " ++ addressL.get(person).street);
+print_newline();
+
+print_string("department street inline: " ++ [%focus person.department.address].get(person).street);
 print_newline();
 
 print_string(
-  "set street on adress record: " ++ addressStreetL.set("Infinite Loop 1", person1.department.address).street,
+  "set street on adress record: " ++ addressStreetL.set("Infinite Loop 1", person.department.address).street,
 );
 print_newline();
