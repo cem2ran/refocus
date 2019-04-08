@@ -99,7 +99,7 @@ streetL.get(updatePerson); // > "Reasonable Street"
 
 ## Existing solutions
 
-## Lens creation ala Ramda `lensPath`
+### Lens creation ala Ramda `lensPath`
 If you're coming from JS you might have stumbled upon Ramda [lensPath](https://ramdajs.com/docs/#lensPath) and functions to act on paths such as `view`, `set` and `over`.
 
 ```javascript
@@ -112,7 +112,7 @@ This is quite convenient, but isn't type-safe. We are only ably to verify that s
 
 Other projects exists that provide a more convenient way of specifying the path and generating a lens through proxies, but as far as I understand this may still be unsafe: [yelouafi/focused](https://github.com/yelouafi/focused)
 
-## ocaml-lens
+### ocaml-lens
 
 [OCaml-lens](https://github.com/pdonadeo/ocaml-lens) provides a way to generate lenses by annotating records for which one requires lenses. 
 
@@ -127,7 +127,7 @@ type person = {
 
 This creates lenses for individual fields of a record and provides a custom operator for composing lenses: `department_lens |-- address_lens |-- street_lens`
 
-## Scala Goggles
+### Scala Goggles
 The Scala community has a library that provides a convenience DSL on top of the Monocle lens library, which provides a similar way of defining and composing lenses like the `refocus` project:
 
 ```scala
@@ -137,3 +137,9 @@ set"$person.department.address.street" := "Scala Blvd"
 `Refocus` is in fact heavily inspired by [kenbot/goggles](https://github.com/kenbot/goggles)
 
 Talk about the rationale and implementation of Goggles: https://youtu.be/t2WTtIwgdLc?t=203
+
+## Should I use this in my project?
+
+***nope.*** 
+
+This project is currently just a PoC. Remaining functions and lens types can be seen in the `Goggles` project.
