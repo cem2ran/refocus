@@ -108,7 +108,7 @@ const lens = R.lensPath(["department", "address", "street"]);
 const updatedPerson = R.set(lens, "Javascript Ave", person);
 ```
 
-This is quite convenient, but isn't type-safe. We are only ably to verify that such a path is valid during runtime. 
+This is quite convenient, but isn't type-safe. We are only ably to verify that such a path is valid during runtime as opposed to compile-time in `refocus`.
 
 Other projects exists that provide a more convenient way of specifying the path and generating a lens through proxies, but as far as I understand this may still be unsafe: [yelouafi/focused](https://github.com/yelouafi/focused)
 
