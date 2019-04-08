@@ -2,6 +2,14 @@
 
 Lenses made Reasonable™
 
+```reason
+let streetL = [%focus person.department.address.street];
+
+let updatedPerson = streetL.set("Reasonable Street", person);
+
+streetL.get(updatePerson); // > "Reasonable Street"
+```
+
 ## Problem
 
 Natively within ReasonML & OCaml you can use record spread to update a record field immutably, but this quickly becomes unwieldy when the field in question is deeply nested:
