@@ -6,7 +6,7 @@ Lenses made Reasonable™
 
 Natively within ReasonML & OCaml you can use record spread to update a record field immutably, but this quickly becomes unwieldy when the field in question is deeply nested:
 
-```reasonml
+```reason
 
 // Quite easy
 let personWithNewName = {
@@ -46,7 +46,7 @@ Lenses can help deal with the above boilerplate, and comes with some nice proper
 
 Given that you have record types that are nested:
 
-```reasonml
+```reason
 type department = {
   name: string,
   address,
@@ -66,7 +66,7 @@ type person = {
 
 And one such instance
 
-```reasonml
+```reason
 
 let person = {
   name: "bob",
@@ -87,7 +87,7 @@ let person = {
 
 We can create a lens, with `%focus`, for getting and immutably setting a deeply nested value, e.g. `person.department.address.street`:
 
-```reasonml
+```reason
 let streetL = [%focus person.department.address.street];
 
 streetL.get(person); // > "Infinite Loop"
@@ -116,7 +116,7 @@ Other projects exists that provide a more convenient way of specifying the path 
 
 [OCaml-lens](https://github.com/pdonadeo/ocaml-lens) provides a way to generate lenses by annotating records for which one requires lenses. 
 
-```reasonml
+```reason
 [@deriving lens]
 type person = {
   name: string,
