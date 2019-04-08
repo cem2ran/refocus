@@ -3,11 +3,11 @@
 Lenses made Reasonable™
 
 ```reason
-let streetL = [%focus person.department.address.street];
+let streetLens = [%focus person.department.address.street];
 
-let updatedPerson = streetL.set("Reasonable Street", person);
+let updatedPerson = streetLens.set("Reasonable Street", person);
 
-streetL.get(updatePerson); // > "Reasonable Street"
+streetLens.get(updatePerson); // > "Reasonable Street"
 ```
 
 ## Problem
