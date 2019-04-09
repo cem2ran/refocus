@@ -4,3 +4,4 @@ lib
 _opam/
 .idea/
 .bsb.lock
+ppx/focus.native

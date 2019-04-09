@@ -7,19 +7,28 @@
     "error": "+8"
   },
   "sources": [
-    {"dir": "src"},
-    {"dir": "ppx", "type": "ppx", "ppx": ["Focus"]},
-    {"dir": "tests", "type": "dev", "subdirs": true, "ppx": ["Focus"], "backend": "native"}
+    { "dir": "src" },
+    { "dir": "ppx", "type": "ppx", "ppx": ["Focus"] },
+    {
+      "dir": "tests",
+      "type": "dev",
+      "subdirs": true,
+      "ppx": ["Focus"],
+      "backend": "native"
+    }
   ],
   "ocaml-dependencies": ["compiler-libs", "unix", "bigarray", "str"],
   "public": ["Main"],
-  "entries": [{
-    "backend": "native",
-    "main-module": "Tests"
-  }, {
-    "backend": "native",
-    "type": "ppx",
-    "main-module": "Focus"
-  }],
+  "entries": [
+    {
+      "backend": "native",
+      "main-module": "Tests"
+    },
+    {
+      "backend": "native",
+      "type": "ppx",
+      "main-module": "Focus"
+    }
+  ],
   "refmt": 3
 }
